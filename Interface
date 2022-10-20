@@ -1,0 +1,135 @@
+//using System;
+//namespace Course.Services
+//{
+//    class BrazilTaxService : ITaxService
+//    {
+
+//        public double Tax(double amount)
+//        {
+//            if (amount <= 100.00)
+//            {
+//                return amount * 0.2;
+//            }
+//            else
+//            {
+//                return amount * 0.15;
+//            }
+//        }
+//    }
+//}
+//----------------------------------------------------------------------------------------------------
+
+//using System;
+//using Course.Entities;
+
+//namespace Course.Services
+//{
+//    class RentalService
+//    {
+
+//        public double PricePerHour { get; private set; }
+//        public double PricePerDay { get; private set; }
+
+//        private ITaxService _taxService;
+
+//        public RentalService(double pricePerHour, double pricePerDay, ITaxService taxService)
+//        {
+//            PricePerHour = pricePerHour;
+//            PricePerDay = pricePerDay;
+//            _taxService = taxService;
+//        }
+
+//        public void ProcessInvoice(CarRental carRental)
+//        {
+
+//            TimeSpan duration = carRental.Finish.Subtract(carRental.Start);
+
+//            double basicPayment = 0.0;
+//            if (duration.TotalHours <= 12.0)
+//            {
+//                basicPayment = PricePerHour * Math.Ceiling(duration.TotalHours);
+//            }
+//            else
+//            {
+//                basicPayment = PricePerDay * Math.Ceiling(duration.TotalDays);
+//            }
+
+//            double tax = _taxService.Tax(basicPayment);
+
+//            carRental.Invoice = new Invoice(basicPayment, tax);
+//        }
+//    }
+//}
+//------------------------------------------------------------------------------------------------------
+
+//using System;
+
+//namespace Course.Entities
+//{
+//    class CarRental
+//    {
+
+//        public DateTime Start { get; set; }
+//        public DateTime Finish { get; set; }
+//        public Vehicle Vehicle { get; private set; }
+//        public Invoice Invoice { get; set; }
+
+//        public CarRental(DateTime start, DateTime finish, Vehicle vehicle)
+//        {
+//            Start = start;
+//            Finish = finish;
+//            Vehicle = vehicle;
+//            Invoice = null;
+//        }
+//    }
+//}
+//-----------------------------------------------------------------------------------------------
+//    using System.Globalization;
+
+//namespace Course.Entities
+//{
+//    class Invoice
+//    {
+
+//        public double BasicPayment { get; set; }
+//        public double Tax { get; set; }
+
+//        public Invoice(double rental, double tax)
+//        {
+//            BasicPayment = rental;
+//            Tax = tax;
+//        }
+
+//        public double TotalPayment
+//        {
+//            get { return BasicPayment + Tax; }
+//        }
+
+//        public override string ToString()
+//        {
+//            return "Basic payment: "
+//                + BasicPayment.ToString("F2", CultureInfo.InvariantCulture)
+//                + "\nTax: "
+//                + Tax.ToString("F2", CultureInfo.InvariantCulture)
+//                + "\nTotal payment: "
+//                + TotalPayment.ToString("F2", CultureInfo.InvariantCulture);
+//        }
+//    }
+//}
+//---------------------------------------------------------------------------------------
+
+//    namespace Course.Entities
+//{
+//    class Vehicle
+//    {
+
+//        public string Model { get; set; }
+
+//        public Vehicle(string model)
+//        {
+//            Model = model;
+//        }
+//    }
+//}
+
+//-----------------------------------------------------------------------------------------
